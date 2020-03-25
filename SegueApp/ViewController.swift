@@ -10,11 +10,32 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var myLabel: UILabel!
+    @IBOutlet weak var myText: UITextField!
+    
+    var userName = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    }
+    
+    //run on the background
+    override func viewWillDisappear(_ animated: Bool) {
+        print("disappear loaded")
+        myText.text = ""
     }
 
-
+    @IBAction func nextClicked(_ sender: Any) {
+        userName = myText.text!
+        performSegue(withIdentifier: "toSecondVC", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toSecondVC" {
+            let destinationVC = segue.destination as! SecondViewController
+            destinationVC.myName = userName
+        }
+    }
+    
 }
 
